@@ -1,0 +1,59 @@
+:root {
+   --bg-body-color: #f4f5ff;
+   --app-primary-color: #34495e;
+}
+
+body {
+   background-color: var(--bg-body-color);
+}
+
+.app-navigation {
+   background-color: var(--app-primary-color);
+}
+
+.mb40 { margin-bottom: 40px; }
+
+.img-fit-contain {
+   object-fit: contain;
+}
+
+.thead-klasemen {
+   background-color: var(--app-primary-color);
+}
+.thead-klasemen > th {
+   border-radius: 0 !important;
+}
+.klasemen-list tbody .name-club {
+   margin: 0;
+   text-align: left;
+}
+
+.card-club-customized .card-image {
+   padding: 12px 17px;
+}
+.card-club-customized .card-content {
+   padding: 10px 17px;
+   text-align: center;
+}
+.card-club-customized .card-content .club-name {
+   font-weight: 600;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
+}
+.card-club-customized .card-content .club-area {
+   font-weight: 400;
+   font-size: 14px;
+}
+
+/* Loader */
+.loader-page {
+   margin: 60px 0;
+}
+.loader-page > .preloader-wrapper.is-centered {
+   margin: 0 auto;
+   display: block;
+}
+.loader-page > .preloader-wrapper .spinner-customized {
+   border-color: var(--app-primary-color);
+}
