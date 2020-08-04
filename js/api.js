@@ -35,6 +35,11 @@ const API = (function() {
          return fetchData(`${URL}/competitions/${league.id}/teams`)
             .then(result => result)
             .catch(error => console.log('get Clubs error', error));
+      },
+      getClub: function(clubID) {
+         return fetchData(`${URL}/teams/${clubID}`)
+            .then(result => result)
+            .catch(error => console.log('get Clubs error', error));
       }
    }
 

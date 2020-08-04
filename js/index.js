@@ -41,7 +41,18 @@ function loadNav() {
    xhr.send();
 }
 
-function loadPage(hasPage) {
+function detailController() {
+   document.querySelectorAll('.card-club-customized a').forEach(function(elm) {
+      elm.addEventListener('click', function(ev) {
+         const isLocation = ev.target.getAttribute('href').substr(1).split('_');
+         const hasPage = isLocation[0];
+         const clubID = parseInt(isLocation[1]);
+         loadPage(hasPage, clubID);
+      });
+   });
+}
+
+function loadPage(hasPage, idParam) {
    const xhr = new XMLHttpRequest();
    xhr.onreadystatechange = function() {
       if(this.readyState === 4) {
@@ -56,6 +67,9 @@ function loadPage(hasPage) {
                   break;  
                case 'clubs':
                   loadClubs();
+                  break;
+               case 'clubdetail':
+                  loadClubDetail(idParam);
                   break;
                // case 'favorites':
                //    loadFavorites();
@@ -91,8 +105,21 @@ function loadClubs() {
    API.getClubs().then(result => {
       clearLoader();
       renderClubs(result, parentEl);
+      detailController();
    }).catch(error => {
       console.log('load Clubs gagal', error);
       handleError(parentEl);
    })
+}
+
+function loadClubDetail(clubID) {
+   renderLoader();
+   const parentEl = document.querySelector('.clubdetail-wrapper');
+   API.getClub(clubID).then(result => {
+      clearLoader();
+      renderClubDetail(result, parentEl);
+   }).catch(error => {
+      console.log('load Club Detail gagal', error);
+      handleError(parentEl);
+   });
 }

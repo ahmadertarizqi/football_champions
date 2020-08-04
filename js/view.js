@@ -113,7 +113,7 @@ function renderClubs(clubs, parentEl) {
                   <img src="${club.crestUrl}" alt="${club.name}" onerror="handleImgError(this)" class="img-fit-contain" width="100" height="100">
                </div>
                <div class="card-content">
-                  <p class="club-name">${club.name}</p>
+                  <a class="club-name" href="#clubdetail_${club.id}">${club.name}</p>
                   <p class="club-area">(${club.area.name})</p>
                </div>
             </div>
@@ -121,4 +121,83 @@ function renderClubs(clubs, parentEl) {
       `;
       parentEl.insertAdjacentHTML('beforeend', markup);
    });
+}
+
+function renderSquadClub(squad) {
+   return `
+      <div class="col s12 m4">
+         <div class="squad-player">
+            <div class="position">${squad.position === null ? squad.role : squad.position}</div>
+            <div class="info">
+               <div class="shirt-number">${squad.shirtNumber === null ? '--' : squad.shirtNumber}</div>
+               <div class="info-player">
+                  <span class="name">${squad.name}</span>
+                  <span class="region">${squad.nationality}</span>
+               </div>
+            </div>
+         </div>
+      </div>
+   `;
+}
+
+function renderClubDetail(club, parentEl) {
+   const data = JSON.parse(JSON.stringify(club).replace(/http:/g, 'https:'));
+   const markup = `
+      <h5 class="center-align mb25" style="margin-top: 0;">Club Team Detail</h5>
+      <div class="card">
+         <div class="card-content club-detail">
+            <div class="head-content">
+               <figure class="center-align" style="margin: 0;">
+                  <img src="${data.crestUrl}" width="125" height="125" class="responsive-img" alt="${data.name}" onerror="handleImgError(this)">
+               </figure>
+               <h5 class="white-text title-club">${data.name}</h5>
+            </div>
+            <div class="body-content">
+               <table>
+                  <tbody>
+                     <tr>
+                        <th>Nama Club</th>
+                        <td>${data.name}</td>
+                     </tr>
+                     <tr>
+                        <th>Tim League</th>
+                        <td>${data.area.name}</td>
+                     </tr>
+                     <tr>
+                        <th>Didirikan</th>
+                        <td>${data.founded}</td>
+                     </tr>
+                     <tr>
+                        <th>Alamat</th>
+                        <td>${data.address}</td>
+                     </tr>
+                     <tr>
+                        <th>Lokasi Arena</th>
+                        <td>${data.venue}</td>
+                     </tr>
+                     <tr>
+                        <th>Kontak</th>
+                        <td>${data.phone}</td>
+                     </tr>
+                     <tr>
+                        <th>Email</th>
+                        <td>${data.email}</td>
+                     </tr>
+                     <tr>
+                        <th>Situs Web</th>
+                        <td><a href="${data.website}" target="_blank">${data.website}</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <div class="squad-content">
+               <h5 class="mb15" style="font-weight: 500;">#Squad</h5>
+               <div class="row" style="margin-left: -0.75rem;margin-right: -0.75rem;">
+                  ${data.squad.map(data => renderSquadClub(data)).join(' ')}
+               </div>
+            </div>
+         </div>
+      </div>
+   `;
+   parentEl.insertAdjacentHTML('beforeend', markup);
 }

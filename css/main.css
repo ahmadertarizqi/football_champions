@@ -11,6 +11,8 @@ body {
    background-color: var(--app-primary-color);
 }
 
+.mb15 { margin-bottom: 15px; }
+.mb25 { margin-bottom: 25px; }
 .mb40 { margin-bottom: 40px; }
 
 .img-fit-contain {
@@ -28,6 +30,9 @@ body {
    text-align: left;
 }
 
+.card-club-customized {
+   display: block;
+}
 .card-club-customized .card-image {
    padding: 12px 17px;
 }
@@ -36,6 +41,7 @@ body {
    text-align: center;
 }
 .card-club-customized .card-content .club-name {
+   color: var(--app-primary-color);
    font-weight: 600;
    text-overflow: ellipsis;
    white-space: nowrap;
@@ -44,6 +50,50 @@ body {
 .card-club-customized .card-content .club-area {
    font-weight: 400;
    font-size: 14px;
+   color: var(--app-primary-color);
+}
+.card-club-customized:hover .card-content .club-name {
+   text-decoration: underline;
+}
+
+.club-detail .head-content {
+   background-color: var(--app-primary-color);
+   margin: -24px -24px 0 -24px;
+   padding: 15px 24px;
+}
+
+.club-detail .head-content .title-club {
+   margin: 0;
+   text-align: center;
+}
+
+.squad-player {
+   border: 1px solid #e0e0e0;
+   margin-bottom: 20px;
+   padding: 12px;
+}
+.squad-player .position {
+   margin-bottom: 6px;
+}
+.squad-player .info {
+   display: flex;
+   align-items: center;
+}
+.squad-player .info .shirt-number {
+   margin-right: 10px;
+   font-size: 30px;
+   font-weight: 400;
+   color: #fff;
+   background-color: var(--app-primary-color);
+   padding: 3px 7px;
+   border-radius: 4px;
+}
+.squad-player .info .info-player > span {
+   display: block;
+}
+.squad-player .info .info-player > .name {
+   font-size: 18px;
+   font-weight: 500;
 }
 
 /* Loader */
