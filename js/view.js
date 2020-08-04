@@ -113,7 +113,7 @@ function renderClubs(clubs, parentEl) {
                   <img src="${club.crestUrl}" alt="${club.name}" onerror="handleImgError(this)" class="img-fit-contain" width="100" height="100">
                </div>
                <div class="card-content">
-                  <a class="club-name" href="#clubdetail_${club.id}">${club.name}</p>
+                  <a class="club-name" href="#clubdetail_${club.id}">${club.name}</a>
                   <p class="club-area">(${club.area.name})</p>
                </div>
             </div>

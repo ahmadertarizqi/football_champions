@@ -68,6 +68,9 @@ body {
 .card-club-customized:hover .card-content .club-name {
    text-decoration: underline;
 }
+.card-club-customized:hover .card-content .club-area {
+   text-decoration: none;
+}
 
 .club-detail .head-content {
    background-color: var(--app-primary-color);
