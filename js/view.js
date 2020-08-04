@@ -127,7 +127,7 @@ function renderSquadClub(squad) {
    return `
       <div class="col s12 m4">
          <div class="squad-player">
-            <div class="position">${squad.position === null ? squad.role : squad.position}</div>
+            <div class="position">${squad.position === null ? squad.role.replace('_', ' ') : squad.position}</div>
             <div class="info">
                <div class="shirt-number">${squad.shirtNumber === null ? '--' : squad.shirtNumber}</div>
                <div class="info-player">
