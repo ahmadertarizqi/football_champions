@@ -25,24 +25,51 @@ const API = (function() {
          });
    }
 
+   const checkCache = function(url) {
+      if('caches' in window) {
+         return caches.match(url)
+               .then(response => response.json())
+               .catch(error => {
+                  console.log('this error from checkCache', error);
+                  return error;
+               });
+      }
+   }
+
    return {
       getKlasemen: function() {
-         return fetchData(`${URL}/competitions/${league.id}/standings?standingType=TOTAL`)
+         const endpoint = `${URL}/competitions/${league.id}/standings?standingType=TOTAL`;
+         if(checkCache(endpoint)) {
+            return checkCache(endpoint).then(result => result);
+         }
+         return fetchData(endpoint)
             .then(result => result)
             .catch(error => console.log('get Klasemen error', error));
       },
       getClubs: function() {
-         return fetchData(`${URL}/competitions/${league.id}/teams`)
+         const endpoint = `${URL}/competitions/${league.id}/teams`;
+         if(checkCache(endpoint)) {
+            return checkCache(endpoint).then(result => result);
+         }
+         return fetchData(endpoint)
             .then(result => result)
             .catch(error => console.log('get Clubs error', error));
       },
       getClub: function(clubID) {
-         return fetchData(`${URL}/teams/${clubID}`)
+         const endpoint = `${URL}/teams/${clubID}`;
+         if(checkCache(endpoint)) {
+            return checkCache(endpoint).then(result => result);
+         }
+         return fetchData(endpoint)
             .then(result => result)
             .catch(error => console.log('get Clubs error', error));
       },
       getPertandingan: function() {
-         return fetchData(`${URL}/competitions/${league.id}/matches`)
+         const endpoint = `${URL}/competitions/${league.id}/matches`;
+         if(checkCache(endpoint)) {
+            return checkCache(endpoint).then(result => result);
+         }
+         return fetchData(endpoint)
             .then(result => result.matches)
             .catch(error => console.log('get Pertandingan Error', error));
       }
