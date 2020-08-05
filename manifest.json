@@ -1,0 +1,32 @@
+{
+  "name": "Football Champions - PWA",
+  "short_name": "Football Champions",
+  "description": "Selamat datang di Football Champions!!, Menampilkan seputar info sepakbola liga champions!!!",
+  "start_url": "./index.html",
+  "theme_color": "#34495e",
+  "background_color": "#34495e",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "img/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "img/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "img/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "splash_pages": null
+}
