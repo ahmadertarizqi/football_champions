@@ -71,9 +71,9 @@ function loadPage(hasPage, idParam) {
                case 'clubdetail':
                   loadClubDetail(idParam);
                   break;
-               // case 'favorites':
-               //    loadFavorites();
-               //    break;
+               case 'pertandingan':
+                  loadPertandingan();
+                  break;
             }
          } else if (this.status === 400) {
             nodeElement.innerHTML = `<p>Halaman tidak ditemukan</p>`;
@@ -120,6 +120,18 @@ function loadClubDetail(clubID) {
       renderClubDetail(result, parentEl);
    }).catch(error => {
       console.log('load Club Detail gagal', error);
+      handleError(parentEl);
+   });
+}
+
+function loadPertandingan() {
+   renderLoader();
+   const parentEl = document.querySelector('.render-pertandingan');
+   API.getPertandingan().then(result => {
+      clearLoader();
+      renderPertandingan(result, parentEl);
+   }).catch(error => {
+      console.log('load Pertandingan gagal', error);
       handleError(parentEl);
    });
 }

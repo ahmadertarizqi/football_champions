@@ -201,3 +201,62 @@ function renderClubDetail(club, parentEl) {
    `;
    parentEl.insertAdjacentHTML('beforeend', markup);
 }
+
+
+function renderPertandingan(pertandingan, parentEl) {
+   const groupByPertandingan = groupBy(pertandingan, 'group');
+   
+   let markup = '';
+   for (const key in groupByPertandingan) {
+      if (groupByPertandingan.hasOwnProperty(key)) {
+         // console.log(groupByPertandingan[key]);
+         let pertandingan;
+         if(key.includes('Group')) {
+            pertandingan = groupByPertandingan[key];
+            // console.log(pertandingan, 'by group');
+         }
+
+         if(pertandingan !== undefined) {
+            markup += `<div class="grup-pertandingan mb40"><h5>Pertandingan ${key}</h5>`;
+            pertandingan.forEach(data => {
+               markup += `
+                  <div class="card card-pertandingan">
+                     <div class="card-content">
+                        <div class="row row-flex mb0">
+                           <div class="col s12 m5 home-team">
+                              ${data.homeTeam.name}
+                              <div><small><em>${data.score.winner === "HOME_TEAM" ? '*Winner' : ''}</em></small></div>
+                           </div>
+                           <div class="col s12 m2">
+                              <div class="info-score">
+                                 <span class="date">${dayjs(data.lastUpdated).format('DD-MMM-YYYY')}</span>
+                                 <span class="score">${data.score.fullTime.homeTeam} - ${data.score.fullTime.awayTeam}</span>
+                                 <span class="time">Full Time</span>
+                              </div>
+                           </div>
+                           <div class="col s12 m5 away-team">
+                              ${data.awayTeam.name}
+                              <div><small><em>${data.score.winner === "AWAY_TEAM" ? '*Winner' : ''}</em></small></div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               `;
+            });
+            markup += `</div>`
+         }
+      }
+      parentEl.innerHTML = markup;
+   }
+}
+
+function groupBy(array, key) {
+   return array.reduce((result, currentValue) => {
+      const cvrKey = key.toLowerCase();
+      if(!result[currentValue[cvrKey]]) {
+         result[currentValue[cvrKey]] = [];
+      }
+      result[currentValue[cvrKey]].push(currentValue);
+      return result;
+   }, {});
+}

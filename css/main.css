@@ -12,9 +12,14 @@ body {
    background-color: var(--app-primary-color);
 }
 
+.mb0 { margin-bottom: 0; }
 .mb15 { margin-bottom: 15px; }
 .mb25 { margin-bottom: 25px; }
 .mb40 { margin-bottom: 40px; }
+.row-flex {
+   display: flex;
+   align-items: center;
+}
 
 .img-fit-contain {
    object-fit: contain;
@@ -110,6 +115,39 @@ body {
 .squad-player .info .info-player > .name {
    font-size: 18px;
    font-weight: 500;
+}
+
+.card-pertandingan .card-content {
+   padding: 0 20px;
+}
+.card-pertandingan .card-content span { display: block; color: #fff; }
+.card-pertandingan .card-content .info-score {
+   text-align: center;
+   background-color: var(--app-primary-color);
+   padding: 5px;
+   border-radius: 0;
+}
+.card-pertandingan .home-team {
+   text-align: right;
+}
+.card-pertandingan .away-team {
+   text-align: left;
+}
+.card-pertandingan .home-team,
+.card-pertandingan .away-team {
+   font-size: 18px;
+   font-weight: 600;
+}
+.card-pertandingan .card-content .score {
+   font-size: 33px;
+   font-weight: 600;
+   color: #fff;
+}
+.card-pertandingan .card-content .date {
+   font-size: 14px;
+}
+.card-pertandingan .card-content .time {
+   font-size: 14px;
 }
 
 /* Loader */

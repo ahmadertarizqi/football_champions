@@ -40,7 +40,42 @@ const API = (function() {
          return fetchData(`${URL}/teams/${clubID}`)
             .then(result => result)
             .catch(error => console.log('get Clubs error', error));
+      },
+      getPertandingan: function() {
+         return fetchData(`${URL}/competitions/${league.id}/matches`)
+            .then(result => {
+               return result.matches;
+               // const tes = groupBy(result.matches, 'group');
+               // console.log('is result', tes);
+
+               // for (const key in tes) {
+               //    if (tes.hasOwnProperty(key)) {
+               //       let element;
+               //       if(key.includes('Group')) {
+               //          element = tes[key];
+               //          // console.log(element);
+               //       }
+                     
+               //       if(element !== undefined) {
+               //          // console.log(element, 'tes');
+               //          // console.log(key);
+               //          Object.keys(tes).sort().forEach((v, i) => {
+               //             console.log(v, tes[v]);
+               //          });
+               //          // console.log(sortByKey);
+               //          // element.forEach(data => {
+               //          //    console.log(data);
+               //          // });
+               //       }
+
+               //    }
+               // }
+            })
+            .catch(error => console.log('get Pertandingan Error', error));
       }
    }
 
 })();
+
+/* testing api */
+// API.getPertandingan();
