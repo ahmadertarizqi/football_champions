@@ -204,7 +204,7 @@ function renderClubDetail(club, parentEl) {
 
 
 function renderPertandingan(pertandingan, parentEl) {
-   const groupByPertandingan = groupBy(pertandingan, 'group');
+   const groupByPertandingan = groupBy(pertandingan.matches, 'group');
    
    let markup = '';
    for (const key in groupByPertandingan) {

@@ -11,72 +11,49 @@ const API = (function() {
       }
    }
 
-   const fetchData = function(url) {
-      return fetch(url, options)
-         .then(response => {
-            if(!response.ok) {
-               console.log("Error : " + response.status);
-               return Promise.reject(new Error(response.statusText));
-            } else {
-               return Promise.resolve(response);
-            }
-         })
-         .then(response => response.json())
-         .catch(error => {
-            console.log('this error from fetchData', error);
-            return error;
-         });
+   const responseStatus = function(response) {
+      if(response.status !== 200){
+         console.log('Error : ' + response.status);
+         return Promise.reject(new Error(response.statusText));
+      } else { 
+         return Promise.resolve(response);
+      }
    }
 
-   const checkCache = function(url) {
+   const fetchData = function(url) {
       if('caches' in window) {
-         return caches.match(url)
-               .then(response => {
-                  if(response) return response.json();
-               })
-               .catch(error => {
-                  console.log('this error from checkCache', error);
-                  return error;
-               });
+         return caches.match(url).then(response => {
+            if(response) {
+               return response.json();
+            } else {
+               return fetch(url, options)
+                  .then(responseStatus)
+                  .then(response => response.json())
+                  .catch(error => {
+                     console.log('Error : ' + error);
+                     return error;
+                  });
+            }
+         });
       }
    }
 
    return {
       getKlasemen: function() {
          const endpoint = `${URL}/competitions/${league.id}/standings?standingType=TOTAL`;
-         if(checkCache(endpoint)) {
-            return checkCache(endpoint).then(result => result);
-         }
-         return fetchData(endpoint)
-            .then(result => result)
-            .catch(error => console.log('get Klasemen error', error));
+         return fetchData(endpoint);
       },
       getClubs: function() {
          const endpoint = `${URL}/competitions/${league.id}/teams`;
-         if(checkCache(endpoint)) {
-            return checkCache(endpoint).then(result => result);
-         }
-         return fetchData(endpoint)
-            .then(result => result)
-            .catch(error => console.log('get Clubs error', error));
+         return fetchData(endpoint);
       },
       getClub: function(clubID) {
          const endpoint = `${URL}/teams/${clubID}`;
-         if(checkCache(endpoint)) {
-            return checkCache(endpoint).then(result => result);
-         }
-         return fetchData(endpoint)
-            .then(result => result)
-            .catch(error => console.log('get Clubs error', error));
+         return fetchData(endpoint);
       },
       getPertandingan: function() {
          const endpoint = `${URL}/competitions/${league.id}/matches`;
-         if(checkCache(endpoint)) {
-            return checkCache(endpoint).then(result => result.matches);
-         }
-         return fetchData(endpoint)
-            .then(result => result.matches)
-            .catch(error => console.log('get Pertandingan Error', error));
+         return fetchData(endpoint);
       }
    }
 
