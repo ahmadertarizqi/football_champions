@@ -19,7 +19,7 @@ const urlsToCache = [
 ];
 
 self.addEventListener('install', function(ev) {
-   ev.waitUntill(
+   ev.waitUntil(
       caches.open(CACHE_NAME)
             .then(function(cache) {
                return cache.addAll(urlsToCache);
@@ -51,7 +51,7 @@ self.addEventListener('fetch', function(ev) {
 });
 
 self.addEventListener('activate', function(ev) {
-   ev.waitUntill(
+   ev.waitUntil(
       caches.keys().then(function(cachesName) {
          return Promise.all(
             cachesName.map(function(cacheName) {
