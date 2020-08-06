@@ -3,13 +3,21 @@ document.addEventListener('DOMContentLoaded', function() {
    M.Sidenav.init(elems);
    loadNav();
 
-   let hasPage = window.location.hash.substr(1);
-   if(hasPage === '') {
-      hasPage = 'klasemen';
-   }
+   let hasPage = window.location.hash.substr(1).split('_');
+   // if(hasPage === '') {
+   //    hasPage = 'klasemen';
+   // }
+   const isPage = hasPage[0] || 'klasemen';
+   const idParam = hasPage[1];
+   loadPage(isPage, idParam);
 
-   loadPage(hasPage);
+   const urlDetail = window.location.href.split('#')[1].split('_');
+   const loadDetailPage = loadPage(urlDetail[0], parseInt(urlDetail[1]));
+   // console.log(urlDetail);
+
+   ['hashchange', 'load'].forEach(event => window.addEventListener(event, loadDetailPage));
 });
+
 
 function loadNav() {
    const xhr = new XMLHttpRequest();
@@ -52,7 +60,8 @@ function detailController() {
    });
 }
 
-function loadPage(hasPage, idParam) {
+function loadPage(hasPage, idParam = null) {
+   console.log(hasPage);
    const xhr = new XMLHttpRequest();
    xhr.onreadystatechange = function() {
       if(this.readyState === 4) {
@@ -73,6 +82,9 @@ function loadPage(hasPage, idParam) {
                   break;
                case 'pertandingan':
                   loadPertandingan();
+                  break;
+               case 'favorites':
+                  loadFavorites();
                   break;
             }
          } else if (this.status === 400) {
@@ -118,10 +130,21 @@ function loadClubDetail(clubID) {
    API.getClub(clubID).then(result => {
       clearLoader();
       renderClubDetail(result, parentEl);
+      
+      const btnFavorit = document.querySelector('.btn-favorit');
+      btnFavorit.addEventListener('click', function(ev) {
+         // btnFavorit.style.backgroundColor = 'red';
+         insertClub(result);
+      });
    }).catch(error => {
       console.log('load Club Detail gagal', error);
       handleError(parentEl);
    });
+}
+
+function loadClubDetailPage() {
+   const url = window.location.href.split('#')[1].split('_');
+   loadPage(url[0], parseInt(url[1]));
 }
 
 function loadPertandingan() {
@@ -130,6 +153,19 @@ function loadPertandingan() {
    API.getPertandingan().then(result => {
       clearLoader();
       renderPertandingan(result, parentEl);
+   }).catch(error => {
+      console.log('load Pertandingan gagal', error);
+      handleError(parentEl);
+   });
+}
+
+function loadFavorites() {
+   renderLoader();
+   const parentEl = document.querySelector('.favorites-wrapper');
+   getAllClub().then(result => {
+      clearLoader();
+      renderFavorites(result, parentEl);
+      detailController();
    }).catch(error => {
       console.log('load Pertandingan gagal', error);
       handleError(parentEl);

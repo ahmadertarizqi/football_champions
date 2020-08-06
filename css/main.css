@@ -2,6 +2,8 @@
    --bg-body-color: #f4f5ff;
    --app-primary-color: #34495e;
    --app-primary-dark-color: #1e2f41;
+   --app-secondary-color: #f1c40f;
+   --app-green-color: #2ecc71;
 }
 
 body {
@@ -17,10 +19,20 @@ body {
 .mb25 { margin-bottom: 25px; }
 .mb40 { margin-bottom: 40px; }
 
+
+.logo-name {
+   display: none;
+}
+
 @media screen and (min-width: 768px) {
    .row-flex {
       display: flex;
       align-items: center;
+   }
+
+   .logo-name {
+      font-size: 22px;
+      display: block;
    }
 }
 
@@ -81,9 +93,38 @@ body {
 }
 
 .club-detail .head-content {
+   position: relative;
    background-color: var(--app-primary-color);
    margin: -24px -24px 0 -24px;
    padding: 15px 24px;
+}
+
+.club-detail .head-content .btn-favorit {
+   position: absolute;
+   top: 15px;
+   right: 15px;
+   font-size: 12px;
+   font-weight: 700;
+   background-color: var(--app-secondary-color);
+   color: #000;
+   text-transform: capitalize;
+}
+
+.club-detail .head-content .btn-favorit i {
+   font-size: 25px;
+   margin-right: 7px;
+}
+
+.club-detail .head-content .logo-football-detail {
+   width: 75px;
+   height: 75px;
+}
+
+@media screen and (min-width: 768px) {
+   .club-detail .head-content .logo-football-detail {
+      width: 125px;
+      height: 125px;
+   }  
 }
 
 .club-detail .head-content .title-club {
@@ -151,6 +192,10 @@ body {
 }
 .card-pertandingan .card-content .time {
    font-size: 14px;
+}
+
+.toast-bgcolor {
+   background-color: var(--app-green-color);
 }
 
 /* Loader */

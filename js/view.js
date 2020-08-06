@@ -148,9 +148,10 @@ function renderClubDetail(club, parentEl) {
          <div class="card-content club-detail">
             <div class="head-content">
                <figure class="center-align" style="margin: 0;">
-                  <img src="${data.crestUrl}" width="125" height="125" class="responsive-img" alt="${data.name}" onerror="handleImgError(this)">
+                  <img src="${data.crestUrl}" class="responsive-img logo-football-detail" alt="${data.name}" onerror="handleImgError(this)">
                </figure>
                <h5 class="white-text title-club">${data.name}</h5>
+               <a class="waves-effect waves-light btn-small btn-favorit"><i class="material-icons left">star_border</i>Tambah ke Favorit</a>
             </div>
             <div class="body-content">
                <table>
@@ -247,5 +248,36 @@ function renderPertandingan(pertandingan, parentEl) {
          }
       }
       parentEl.innerHTML = markup;
+   }
+}
+
+function renderFavorites(clubs, parentEl) {
+   console.log(clubs);
+   let markup = '';
+   if(clubs.length > 0) {
+      clubs.forEach(data => {
+         const club = JSON.parse(JSON.stringify(data).replace(/http:/g, 'https:'));
+         markup = `
+            <div class="col s12 m3">
+               <div class="card card-club-customized">
+                  <div class="card-image center">
+                     <img src="${club.crestUrl}" alt="${club.name}" onerror="handleImgError(this)" class="img-fit-contain" width="100" height="100">
+                  </div>
+                  <div class="card-content">
+                     <a class="club-name" href="#clubdetail_${club.id}">${club.name}</a>
+                     <p class="club-area">(${club.area.name})</p>
+                  </div>
+               </div>
+            </div>
+         `;
+         parentEl.insertAdjacentHTML('beforeend', markup);
+      });
+   } else {
+      markup = `
+         <div class="col s12">
+            <h4 class="center-align">Anda tidak memiliki Tim Club Favorit</h4>
+         </div>
+      `;
+      parentEl.insertAdjacentHTML('beforeend', markup);
    }
 }
