@@ -121,7 +121,7 @@ function loadClubs() {
    }).catch(error => {
       console.log('load Clubs gagal', error);
       handleError(parentEl);
-   })
+   });
 }
 
 function loadClubDetail(clubID) {
@@ -133,24 +133,13 @@ function loadClubDetail(clubID) {
       clearLoader();
       renderClubDetail(result, parentEl);
 
-      const btnFavorit = document.querySelector('.btn-favorit');
-      btnFavorit.addEventListener('click', function(ev) {
-         insertClub(result);
-      });
+      // const btnFavorit = document.querySelector('.btn-favorit');
+      // btnFavorit.addEventListener('click', function(ev) {
+      //    DB.insertClub(result);
+      // });
    }).catch(error => {
       console.log('load Club Detail no Saved gagal', error);
       handleError(parentEl);
-   });
-
-   // kalo ada di db
-   getClub(clubID).then(result => {
-      clearLoader();
-      renderClubDetail(result, parentEl);
-
-      const btnFavorit = document.querySelector('.btn-favorit');
-      btnFavorit.addEventListener('click', function(ev) {
-         deleteClub(clubID);
-      });
    });
 }
 
@@ -174,7 +163,7 @@ function loadPertandingan() {
 function loadFavorites() {
    renderLoader();
    const parentEl = document.querySelector('.favorites-wrapper');
-   getAllClub().then(result => {
+   DB.getAllClub().then(result => {
       clearLoader();
       renderFavorites(result, parentEl);
       detailController();
