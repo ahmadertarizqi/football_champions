@@ -152,6 +152,7 @@ function renderClubDetail(club, parentEl) {
                </figure>
                <h5 class="white-text title-club">${data.name}</h5>
                <a class="waves-effect waves-light btn-small btn-favorit"><i class="material-icons left">star_border</i>Tambah ke Favorit</a>
+               <a class="waves-effect waves-light btn-small btn-delete"><i class="material-icons left">star_border</i>Hapus dari Favorit</a>
             </div>
             <div class="body-content">
                <table>
@@ -252,7 +253,7 @@ function renderPertandingan(pertandingan, parentEl) {
 }
 
 function renderFavorites(clubs, parentEl) {
-   console.log(clubs);
+   // console.log(clubs);
    let markup = '';
    if(clubs.length > 0) {
       clubs.forEach(data => {

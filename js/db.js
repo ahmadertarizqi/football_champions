@@ -13,7 +13,7 @@ const insertClub = function(club) {
    }).then(() => {
       M.toast({
          html: `${club.name} berhasil ditambahkan ke Favorit`,
-         classes: "toast-bgcolor"
+         classes: "toast-bgcolor-success"
       });
       console.log('Club berhasil di simpan');
    });
@@ -24,5 +24,23 @@ const getAllClub = function() {
       const tx = db.transaction('club', 'readonly');
       const store = tx.objectStore('club');
       return store.getAll();
+   });
+}
+
+const getClub = function(clubID) {
+   // console.log(clubID, 'id club');
+   return initialDB.then(db => {
+      const tx = db.transaction('club', 'readonly');
+      const store = tx.objectStore('club');
+      return store.get(clubID);
+   });
+}
+
+const deleteClub = function(clubID) {
+   initialDB.then(db => {
+      const tx = db.transaction('club', 'readwrite');
+      const store = tx.objectStore('club');
+      store.delete(clubID);
+      return tx.complete;
    });
 }

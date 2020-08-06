@@ -4,6 +4,7 @@
    --app-primary-dark-color: #1e2f41;
    --app-secondary-color: #f1c40f;
    --app-green-color: #2ecc71;
+   --app-red-color: rgb(223, 37, 37);
 }
 
 body {
@@ -90,6 +91,25 @@ body {
 }
 .card-club-customized:hover .card-content .club-area {
    text-decoration: none;
+}
+
+/* .btn-is-delete {
+   height: 23px;
+   line-height: 23px;
+   font-size: 12px;
+   padding: 0 8px;
+   background-color: rgb(251, 61, 61);
+}
+.btn-is-delete:hover {
+   background-color: rgb(223, 37, 37);
+}
+.btn-is-delete i {
+   font-size: 20px;
+   margin-right: 5px;
+} */
+
+.card-club-customized .card-action {
+   padding: 10px 17px;
 }
 
 .club-detail .head-content {
@@ -194,8 +214,11 @@ body {
    font-size: 14px;
 }
 
-.toast-bgcolor {
+.toast-bgcolor-success {
    background-color: var(--app-green-color);
+}
+.toast-bgcolor-destroy {
+   background-color: var(--app-red-color);
 }
 
 /* Loader */
