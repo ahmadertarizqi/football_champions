@@ -140,7 +140,7 @@ function renderSquadClub(squad) {
    `;
 }
 
-function renderClubDetail(club, parentEl) {
+function renderClubDetail(club, parentEl, state) {
    const data = JSON.parse(JSON.stringify(club).replace(/http:/g, 'https:'));
    const markup = `
       <h5 class="center-align mb25" style="margin-top: 0;">Club Team Detail</h5>
@@ -151,8 +151,9 @@ function renderClubDetail(club, parentEl) {
                   <img src="${data.crestUrl}" class="responsive-img logo-football-detail" alt="${data.name}" onerror="handleImgError(this)">
                </figure>
                <h5 class="white-text title-club">${data.name}</h5>
-               <a class="waves-effect waves-light btn-small btn-favorit"><i class="material-icons left">star_border</i>Tambah ke Favorit</a>
-               <a class="waves-effect waves-light btn-small btn-delete"><i class="material-icons left">star_border</i>Hapus dari Favorit</a>
+               <a class="waves-effect waves-light btn-small btn-is-handler btn-favorit${state ? '--delete' : '--add'}">
+                  ${state ? '<i class="material-icons left">delete</i> Hapus dari daftar Favorit' : '<i class="material-icons left">star</i> Tambah ke Favorit' }
+               </a>
             </div>
             <div class="body-content">
                <table>
@@ -265,7 +266,7 @@ function renderFavorites(clubs, parentEl) {
                      <img src="${club.crestUrl}" alt="${club.name}" onerror="handleImgError(this)" class="img-fit-contain" width="100" height="100">
                   </div>
                   <div class="card-content">
-                     <a class="club-name" href="#clubdetail_${club.id}">${club.name}</a>
+                     <a class="club-name" href="#clubdetail_${club.id}?saved=true">${club.name}</a>
                      <p class="club-area">(${club.area.name})</p>
                   </div>
                </div>

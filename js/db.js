@@ -31,6 +31,9 @@ const DB = (function() {
             const tx = db.transaction('club', 'readonly');
             const store = tx.objectStore('club');
             return store.get(clubID);
+         }).then((result) => {
+            console.log(result);
+            return Promise.resolve(result);
          });
       },
       deleteClub: function(clubID) {
@@ -39,8 +42,16 @@ const DB = (function() {
             const store = tx.objectStore('club');
             store.delete(clubID);
             return tx.complete;
+         }).then(() => {
+            M.toast({
+               html: `Berhasil di hapus`,
+               classes: "toast-bgcolor-destroy"
+            });
+            console.log('Club berhasil di hapus');
          });
       }
    }
 
 })();
+
+// DB.getClub(61);

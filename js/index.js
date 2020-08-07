@@ -127,19 +127,39 @@ function loadClubs() {
 function loadClubDetail(clubID) {
    renderLoader();
    const parentEl = document.querySelector('.clubdetail-wrapper');
-
-   // kalo tdk ada di db
+   const isFromSaved = getHashValue('saved');
+   
    API.getClub(clubID).then(result => {
       clearLoader();
-      renderClubDetail(result, parentEl);
-
-      // const btnFavorit = document.querySelector('.btn-favorit');
-      // btnFavorit.addEventListener('click', function(ev) {
-      //    DB.insertClub(result);
-      // });
+      
+      if(isFromSaved) {
+         DB.getClub(clubID).then(result => {
+            renderClubDetail(result, parentEl, isFromSaved);
+            toggleSaveButton(isFromSaved, result);
+         });
+      } else {
+         renderClubDetail(result, parentEl, isFromSaved);
+         toggleSaveButton(isFromSaved, result);
+      }
    }).catch(error => {
-      console.log('load Club Detail no Saved gagal', error);
+      console.log('load Club Detail gagal', error);
       handleError(parentEl);
+   });
+}
+
+function getHashValue(key) {
+   const matches = location.hash.match(new RegExp(key + '=([^&]*)'));
+   return matches ? matches[1] : null;
+}
+
+function toggleSaveButton(state, club) {
+   const btnFavorit = document.querySelector('.btn-is-handler');
+   btnFavorit.addEventListener('click', (ev) => {
+      if(state) {
+         DB.deleteClub(club.id);
+      } else {
+         DB.insertClub(club);
+      }
    });
 }
 

@@ -119,15 +119,21 @@ body {
    padding: 15px 24px;
 }
 
-.club-detail .head-content .btn-favorit {
+.club-detail .head-content .btn-favorit--add,
+.club-detail .head-content .btn-favorit--delete {
    position: absolute;
    top: 15px;
    right: 15px;
    font-size: 12px;
    font-weight: 700;
-   background-color: var(--app-secondary-color);
-   color: #000;
+   color: #fff;
    text-transform: capitalize;
+}
+.club-detail .head-content .btn-favorit--add {
+   background-color: var(--app-green-color);
+}
+.club-detail .head-content .btn-favorit--delete {
+   background-color: var(--app-red-color);
 }
 
 .club-detail .head-content .btn-favorit i {
