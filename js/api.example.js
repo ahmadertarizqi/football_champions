@@ -7,7 +7,7 @@ const API = (function() {
    
    const options = {
       headers: {
-         'X-Auth-Token': '54fc7df3a2e14f7d881e993a12db5f97'
+         'X-Auth-Token': 'FOOTBALL_API_KEY'
       }
    }
 

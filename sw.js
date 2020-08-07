@@ -11,6 +11,7 @@ const urlsToCache = [
    "./pages/favorites.html",
    "./css/materialize.min.css",
    "./css/main.css",
+   "./js/initialize.js",
    "./js/materialize.min.js",
    "./js/dayjs.min.js",
    "./js/utils.js",
