@@ -59,7 +59,7 @@ function detailController() {
 }
 
 function loadPage(hasPage, idParam = null) {
-   console.log(hasPage);
+   // console.log(hasPage);
    const xhr = new XMLHttpRequest();
    xhr.onreadystatechange = function() {
       if(this.readyState === 4) {

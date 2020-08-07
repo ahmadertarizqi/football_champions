@@ -30,6 +30,7 @@
    
    <div class="container" id="nodeElement"></div>
 
+   <script src="./js/initialize.js"></script>
    <script src="./js/materialize.min.js"></script>
    <script src="./js/dayjs.min.js"></script>
    <script src="./js/utils.js"></script>
@@ -40,16 +41,8 @@
    <script src="./js/index.js"></script>
    <script>
       if('serviceWorker' in navigator) {
-         window.addEventListener('load', function() {
-            navigator.serviceWorker
-               .register("./sw.js")
-               .then(function() {
-                  console.log("Pendaftaran ServiceWorker berhasil");
-               })
-               .catch(function() {
-                  console.log("Pendaftaran ServiceWorker gagal");
-               });
-         });
+         registerServiceWorker();
+         requestPermission();
       } else {
          console.log("ServiceWorker belum didukung browser ini.");
       }

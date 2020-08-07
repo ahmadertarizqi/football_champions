@@ -71,3 +71,24 @@ self.addEventListener('activate', function(ev) {
    );
 });
 
+self.addEventListener('push', function(ev) {
+   let body;
+   if(ev.data) {
+      body = ev.data.text();
+   } else {
+      body = 'Push message no Payload';
+   }
+
+   const options = {
+      body: body,
+      icon: './img/icons/icon-96x96.png',
+      vibrate: [100, 50, 100],
+      data: {
+         dateOfArrival: Date.now(),
+         primaryKey: 1
+      }
+   }
+
+   ev.waitUntil(self.registration.showNotification('Push Notification', options));
+});
+
