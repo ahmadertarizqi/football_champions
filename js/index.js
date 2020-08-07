@@ -4,9 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
    loadNav();
 
    let hasPage = window.location.hash.substr(1).split('_');
-   // if(hasPage === '') {
-   //    hasPage = 'klasemen';
-   // }
+   
    const isPage = hasPage[0] || 'klasemen';
    const idParam = hasPage[1];
    loadPage(isPage, idParam);
