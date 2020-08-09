@@ -4,54 +4,53 @@ const DB = (function() {
       upgradeDB.createObjectStore("club", { keyPath: 'id' });
    });
 
+   const insertDB = function(data, objName) {
+      initialDB.then(db => {
+         const tx = db.transaction(objName, 'readwrite');
+         const store = tx.objectStore(objName);
+         store.put(data);
+         return tx.complete;
+      });
+   }
+
+   const getAllDB = function(objName) {
+      return initialDB.then(db => {
+         const tx = db.transaction(objName, 'readonly');
+         const store = tx.objectStore(objName);
+         return store.getAll();
+      });
+   }
+
+   const getDB = function(dataID, objName) {
+      return initialDB.then(db => {
+         const tx = db.transaction(objName, 'readonly');
+         const store = tx.objectStore(objName);
+         return store.get(dataID);
+      });
+   }
+
+   const deleteDB = function(dataID, objName) {
+      initialDB.then(db => {
+         const tx = db.transaction(objName, 'readwrite');
+         const store = tx.objectStore(objName);
+         store.delete(dataID);
+         return tx.complete;
+      });
+   }
+
    return {
       insertClub: function(club) {
-         initialDB.then(db => {
-            const tx = db.transaction('club', 'readwrite');
-            const store = tx.objectStore('club');
-            store.put(club);
-            return tx.complete;
-         }).then(() => {
-            M.toast({
-               html: `${club.name} berhasil ditambahkan ke Favorit`,
-               classes: "toast-bgcolor-success"
-            });
-            console.log('Club berhasil di simpan');
-         });
+         return insertDB(club, 'club');
       },
       getAllClub: function() {
-         return initialDB.then(db => {
-            const tx = db.transaction('club', 'readonly');
-            const store = tx.objectStore('club');
-            return store.getAll();
-         });
+         return getAllDB('club');
       },
       getClub: function(clubID) {
-         return initialDB.then(db => {
-            const tx = db.transaction('club', 'readonly');
-            const store = tx.objectStore('club');
-            return store.get(clubID);
-         }).then((result) => {
-            console.log(result);
-            return Promise.resolve(result);
-         });
+         return getDB(clubID, 'club');
       },
       deleteClub: function(clubID) {
-         initialDB.then(db => {
-            const tx = db.transaction('club', 'readwrite');
-            const store = tx.objectStore('club');
-            store.delete(clubID);
-            return tx.complete;
-         }).then(() => {
-            M.toast({
-               html: `Berhasil di hapus`,
-               classes: "toast-bgcolor-destroy"
-            });
-            console.log('Club berhasil di hapus');
-         });
+         return deleteDB(clubID, 'club');
       }
    }
 
 })();
-
-// DB.getClub(61);

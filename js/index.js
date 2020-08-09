@@ -125,29 +125,24 @@ function loadClubs() {
 function loadClubDetail(clubID) {
    renderLoader();
    const parentEl = document.querySelector('.clubdetail-wrapper');
-   const isFromSaved = getHashValue('saved');
    
    API.getClub(clubID).then(result => {
       clearLoader();
       
-      if(isFromSaved) {
-         DB.getClub(clubID).then(result => {
+      DB.getClub(clubID).then(resultDB => {
+         const isFromSaved = resultDB;
+         if(isFromSaved) {
+            renderClubDetail(resultDB, parentEl, isFromSaved);
+            toggleSaveButton(isFromSaved, resultDB);
+         } else {
             renderClubDetail(result, parentEl, isFromSaved);
             toggleSaveButton(isFromSaved, result);
-         });
-      } else {
-         renderClubDetail(result, parentEl, isFromSaved);
-         toggleSaveButton(isFromSaved, result);
-      }
+         }
+      });
    }).catch(error => {
       console.log('load Club Detail gagal', error);
       handleError(parentEl);
    });
-}
-
-function getHashValue(key) {
-   const matches = location.hash.match(new RegExp(key + '=([^&]*)'));
-   return matches ? matches[1] : null;
 }
 
 function toggleSaveButton(state, club) {
@@ -155,8 +150,18 @@ function toggleSaveButton(state, club) {
    btnFavorit.addEventListener('click', (ev) => {
       if(state) {
          DB.deleteClub(club.id);
+         M.toast({
+            html: `${club.name} Berhasil di hapus`,
+            classes: "toast-bgcolor-destroy",
+            inDuration: 2000
+         });
       } else {
          DB.insertClub(club);
+         M.toast({
+            html: `${club.name} Berhasil ditambahkan ke Favorit`,
+            classes: "toast-bgcolor-success",
+            inDuration: 2000
+         });
       }
    });
 }
