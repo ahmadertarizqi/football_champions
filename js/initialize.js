@@ -1,3 +1,11 @@
+/* initial service-worker and push notification */
+if('serviceWorker' in navigator) {
+   registerServiceWorker();
+   requestPermission();
+} else {
+   console.log("ServiceWorker belum didukung browser ini.");
+}
+
 function registerServiceWorker() {
    return navigator.serviceWorker.register("./sw.js")
       .then(function(registration) {

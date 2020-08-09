@@ -18,11 +18,15 @@ const urlsToCache = [
    "./js/api.js",
    "./js/view.js",
    "./js/index.js",
+   "./js/idb.js",
+   "./js/db.js",
    "./img/img_default.png",
    "./img/icons/icon-96x96.png",
    "./img/icons/icon-144x144.png",
    "./img/icons/icon-192x192.png",
    "./img/icons/icon-512x512.png",
+   "https://fonts.googleapis.com/icon?family=Material+Icons",
+   "https://fonts.gstatic.com/s/materialicons/v53/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2"
 ];
 
 self.addEventListener('install', function(ev) {
