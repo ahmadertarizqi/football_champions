@@ -1,3 +1,5 @@
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
+
 const CACHE_NAME = 'FOOTBALL_PWA';
 const urlsToCache = [
    "./",
