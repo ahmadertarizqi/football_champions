@@ -28,7 +28,7 @@ function requestPermission() {
             return;
          }
 
-         navigator.serviceWorker.ready.then(() => {
+         navigator.serviceWorker.ready.then(function() {
             if(('PushManager' in window)) {
                navigator.serviceWorker.getRegistration().then(function(regist) {
                   regist.pushManager.subscribe({
