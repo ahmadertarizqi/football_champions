@@ -9,9 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
    const idParam = hasPage[1];
    loadPage(isPage, idParam);
 
-   const urlDetail = window.location.href.split('#')[1].split('_');
-   const loadDetailPage = loadPage(urlDetail[0], parseInt(urlDetail[1]));
-   // console.log(urlDetail);
+   let loadDetailPage;
+   if(window.location.href.indexOf('#') > -1) {
+      const urlDetail = window.location.href.split('#')[1].split('_');
+      loadDetailPage = loadPage(urlDetail[0], parseInt(urlDetail[1]));
+   }
 
    ['hashchange', 'load'].forEach(event => window.addEventListener(event, loadDetailPage));
 });
