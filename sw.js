@@ -1,83 +1,67 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
 
-const CACHE_NAME = 'FOOTBALL_PWA';
+if(workbox) {
+   console.log('Yay! Workbox is loaded 🎉');
+} else {
+   console.log('Boo! Workbox didnt load 😬');
+}
+
 const urlsToCache = [
-   "./",
-   "./manifest.json",
-   "./index.html",
-   "./nav.html",
-   "./pages/klasemen.html",
-   "./pages/pertandingan.html",
-   "./pages/clubs.html",
-   "./pages/clubdetail.html",
-   "./pages/favorites.html",
-   "./css/materialize.min.css",
-   "./css/main.css",
-   "./js/initialize.js",
-   "./js/materialize.min.js",
-   "./js/dayjs.min.js",
-   "./js/utils.js",
-   "./js/api.js",
-   "./js/view.js",
-   "./js/index.js",
-   "./js/idb.js",
-   "./js/db.js",
-   "./img/img_default.png",
-   "./img/icons/icon-96x96.png",
-   "./img/icons/icon-144x144.png",
-   "./img/icons/icon-192x192.png",
-   "./img/icons/icon-512x512.png",
-   "https://fonts.googleapis.com/icon?family=Material+Icons",
-   "https://fonts.gstatic.com/s/materialicons/v53/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2"
+   { url: "./", revision: "1" },
+   { url: "./manifest.json", revision: "1" },
+   { url: "./index.html", revision: "1" },
+   { url: "./nav.html", revision: "1" },
+   { url: "./pages/klasemen.html", revision: "1" },
+   { url: "./pages/pertandingan.html", revision: "1" },
+   { url: "./pages/clubs.html", revision: "1" },
+   { url: "./pages/clubdetail.html", revision: "1" },
+   { url: "./pages/favorites.html", revision: "1" },
+   { url: "./css/materialize.min.css", revision: "1" },
+   { url: "./css/main.css", revision: "1" },
+   { url: "./js/initialize.js", revision: "1" },
+   { url: "./js/materialize.min.js", revision: "1" },
+   { url: "./js/dayjs.min.js", revision: "1" },
+   { url: "./js/utils.js", revision: "1" },
+   { url: "./js/api.js", revision: "1" },
+   { url: "./js/view.js", revision: "1" },
+   { url: "./js/index.js", revision: "1" },
+   { url: "./js/idb.js", revision: "1" },
+   { url: "./js/db.js", revision: "1" },
+   { url: "./img/img_default.png", revision: "1" },
+   { url: "./img/icons/icon-96x96.png", revision: "1" },
+   { url: "./img/icons/icon-144x144.png", revision: "1" },
+   { url: "./img/icons/icon-192x192.png", revision: "1" },
+   { url: "./img/icons/icon-512x512.png", revision: "1" },
+   { url: "https://fonts.googleapis.com/icon?family=Material+Icons", revision: "1" },
+   { url: "https://fonts.gstatic.com/s/materialicons/v53/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2", revision: "1" },
 ];
 
-self.addEventListener('install', function(ev) {
-   ev.waitUntil(
-      caches.open(CACHE_NAME)
-            .then(function(cache) {
-               return cache.addAll(urlsToCache);
-            })
-   );
-});
+workbox.precaching.precacheAndRoute(urlsToCache);
 
-self.addEventListener('fetch', function(ev) {
-   const apiURL = 'https://api.football-data.org/v2';
+workbox.routing.registerRoute(
+   /^https:\/\/api\.football-data\.org\//,
+   workbox.strategies.staleWhileRevalidate({
+      cacheName: 'url-api-cache'
+   })
+);
 
-   if(ev.request.url.indexOf(apiURL) > -1) {
-      ev.respondWith(
-         caches.open(CACHE_NAME)
-               .then(function(cache) {
-                  return fetch(ev.request).then(function(response) {
-                     cache.put(ev.request.url, response.clone());
-                     return response;
-                  });
-               })
-      );
-   } else {
-      ev.respondWith(
-         caches.match(ev.request, { ignoreSearch: true })
-               .then(function(response) {
-                  return response || fetch(ev.request);
-               })
-      );
-   }
-});
+workbox.routing.registerRoute(
+   /.*(?:png|gif|jpg|jpeg|svg)$/,
+   workbox.strategies.cacheFirst({
+      cacheName: 'images-cache',
+      plugins: [
+         new workbox.cacheableResponse.Plugin({
+            statuses: [0, 200]
+         }),
+         new workbox.expiration.Plugin({
+            maxEntries: 100,
+            maxAgeSeconds: 30 * 24 * 60 * 60
+         })
+      ]
+   })
+);
 
-self.addEventListener('activate', function(ev) {
-   ev.waitUntil(
-      caches.keys().then(function(cachesName) {
-         return Promise.all(
-            cachesName.map(function(cacheName) {
-               if(cacheName !== CACHE_NAME) {
-                  console.log(`Service Worker : cache ${cacheName} dihapus`);
-                  return caches.delete(cacheName);
-               }
-            })
-         )
-      })
-   );
-});
-
+/* push notification */
 self.addEventListener('push', function(ev) {
    let body;
    if(ev.data) {
