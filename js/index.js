@@ -140,7 +140,11 @@ function loadClubDetail(clubID) {
             renderClubDetail(result, parentEl, isFromSaved);
             toggleSaveButton(isFromSaved, result);
          }
+      }).catch(error => {
+         console.log('load Club Detail dari Saved gagal', error);
+         handleError(parentEl);
       });
+
    }).catch(error => {
       console.log('load Club Detail gagal', error);
       handleError(parentEl);
