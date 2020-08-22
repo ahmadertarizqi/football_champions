@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', function() {
    M.Sidenav.init(elems);
    loadNav();
 
+   const tabElem = document.querySelector('.tabs');
+   M.Tabs.init(tabElem);
+
    let hasPage = window.location.hash.substr(1).split('_');
    
    const isPage = hasPage[0] || 'klasemen';

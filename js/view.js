@@ -209,13 +209,18 @@ function renderClubDetail(club, parentEl, state) {
 function renderPertandingan(pertandingan, parentEl) {
    const groupByPertandingan = groupBy(pertandingan.matches, 'group');
    
+   const groupOrdered = {};
+   Object.keys(groupByPertandingan).sort().forEach((key) => {
+      groupOrdered[key] = groupByPertandingan[key];
+   });
+   
    let markup = '';
-   for (const key in groupByPertandingan) {
-      if (groupByPertandingan.hasOwnProperty(key)) {
-         // console.log(groupByPertandingan[key]);
+   for (const key in groupOrdered) {
+      if (groupOrdered.hasOwnProperty(key)) {
+         // console.log(groupOrdered[key]);
          let pertandingan;
          if(key.includes('Group')) {
-            pertandingan = groupByPertandingan[key];
+            pertandingan = groupOrdered[key];
             // console.log(pertandingan, 'by group');
          }
 
