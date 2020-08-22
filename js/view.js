@@ -205,23 +205,6 @@ function renderClubDetail(club, parentEl, state) {
    parentEl.insertAdjacentHTML('beforeend', markup);
 }
 
-// function controlTabs(group) {
-//    let markup = '';
-
-//    for(const key in group) {
-//       if(group.hasOwnProperty(key)) {
-//          let isKey;
-//          if(key.includes('Group')) isKey = key;
-         
-//          if(isKey !== undefined) {
-//             console.log(group.sort(dynamicSort(key)));
-//             markup += `<li class="tab"><a class="active" href="#${isKey.toLowerCase().replace(' ','-')}">${isKey}</a></li>`;
-//          }
-//       }
-//    }
-//    return markup;
-// }
-
 
 function renderPertandingan(pertandingan, parentEl) {
    const groupByPertandingan = groupBy(pertandingan.matches, 'group');
